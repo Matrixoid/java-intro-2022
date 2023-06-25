@@ -1,0 +1,48 @@
+import java.util.Scanner;
+
+public class ReverseSum {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int numbersSize = 1024;
+        int numbersLineCount = 0;
+        int[][] numbers = new int[numbersSize][];
+
+        while(sc.hasNextLine()) {
+            String str = sc.nextLine();
+            Scanner sc1 = new Scanner(str);
+            int[] numbersLine = new int[0];
+
+            while(sc1.hasNext()) {
+                int[] numbersLineTmp = new int[numbersLine.length + 1];
+                System.arraycopy(numbersLine, 0, numbersLineTmp, 0, numbersLine.length);
+                numbersLineTmp[numbersLine.length] = sc1.nextInt();
+                numbersLine = numbersLineTmp;
+            }
+
+            numbers[numbersLineCount] = numbersLine;
+            numbersLineCount++;
+            if (numbersLineCount >= numbersSize) {
+                numbersSize *= 2;
+                int[][] numbersTmp = new int[numbersSize][];
+                System.arraycopy(numbers, 0, numbersTmp, 0, numbersLineCount);
+                numbers = numbersTmp;
+            }
+        }
+
+        for (int i = 0; i < numbersLineCount; i++) {
+            for (int j = 0; j < numbers[i].length; j++) {
+                int t = numbers[i][j];
+                for (int k = 0; k < numbers[i].length; k++) {
+                    if (k != j)
+                        t += numbers[i][k];
+                }
+                for (int k = 0; k < numbersLineCount; k++) {
+                    if (j < numbers[k].length && k != i)
+                        t += numbers[k][j];
+                }
+                System.out.print(t + " ");
+            }
+            System.out.println();
+        }
+    }
+}
