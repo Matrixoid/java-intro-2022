@@ -7,6 +7,6 @@ java -ea -jar %pth% Even
 java -ea -jar %pth% Abc
 java -ea -jar %pth% Avg
 java -ea -jar %pth% Oct
-::java -ea -jar %pth% OctDec
-::java -ea -jar %pth% OctAbc
+java -ea -jar %pth% OctDec
+java -ea -jar %pth% OctAbc
 pause
