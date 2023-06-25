@@ -2,11 +2,9 @@
 
 Модификации
  * *Base*
-    * Исходный код тестов:
-        [ReverseTest.java](java/reverse/ReverseTest.java),
-        [ReverseTester.java](java/reverse/ReverseTester.java)
-    * Откомпилированные тесты: [ReverseTest.jar](artifacts/ReverseTest.jar)
+    * Откомпилированные тесты: [ReverseTest.jar](tests/ReverseTest.jar)
         * Аргументы командной строки: модификация
+    * Запуск тестов: [run](tests/run.bat)
  * *Sum* (36, 37)
     * Рассмотрим входные данные как (не полностью определенную) матрицу,
       вместо каждого числа выведите сумму чисел
