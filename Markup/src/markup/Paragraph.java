@@ -2,9 +2,9 @@ package markup;
 
 import java.util.List;
 
-public class Paragraph extends AbstractElement{
+public class Paragraph extends AbstractElement implements ListElement{
 
-    public Paragraph(List<MarkdownElement> elements) {
+    public Paragraph(List<ParagraphElement> elements) {
         super("", "", "", elements);
     }
 

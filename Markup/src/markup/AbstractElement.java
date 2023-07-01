@@ -6,9 +6,9 @@ public abstract class AbstractElement implements MarkdownElement {
     private final String highlighterBase;
     private final String highlighterHtml;
     private final String highlighterTex;
-    protected final List<MarkdownElement> elements;
+    protected final List<? extends MarkdownElement> elements;
 
-    protected AbstractElement(String highlighterBase, String highlighterHtml, String highlighterTex, List<MarkdownElement> elements) {
+    protected AbstractElement(String highlighterBase, String highlighterHtml, String highlighterTex, List<? extends MarkdownElement> elements) {
         this.highlighterBase = highlighterBase;
         this.highlighterHtml = highlighterHtml;
         this.highlighterTex = highlighterTex;

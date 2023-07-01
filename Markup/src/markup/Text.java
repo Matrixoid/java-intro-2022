@@ -1,9 +1,12 @@
 package markup;
 
-public class Text implements MarkdownElement {
+import java.util.List;
+
+public class Text extends AbstractParagraphElement {
     private final String value;
 
     public Text(String value) {
+        super("", "", "", List.of());
         this.value = value;
     }
 

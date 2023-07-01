@@ -2,9 +2,9 @@ package markup;
 
 import java.util.List;
 
-public class Strong extends AbstractElement {
+public class Strong extends AbstractParagraphElement {
 
-    public Strong(List<MarkdownElement> elements) {
+    public Strong(List<AbstractParagraphElement> elements) {
         super("__", "<strong>", "\\textbf{", elements);
     }
 
