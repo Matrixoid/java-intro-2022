@@ -1,9 +1,6 @@
 import java.util.Scanner;
 
-public class ReverseTranspose {
-    public ReverseTranspose() {
-    }
-
+public class ReverseMinR {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int numbersSize = 1024;
@@ -32,23 +29,13 @@ public class ReverseTranspose {
             }
         }
 
-        int maxSize = 0;
-
-        int i;
-        for(i = 0; i < numbersLineCount; i++) {
-            if (numbers[i].length > maxSize) {
-                maxSize = numbers[i].length;
-            }
-        }
-
-        for(i = 0; i < maxSize; ++i) {
-            for(int j = 0; j < numbersLineCount; j++) {
-                if (i < numbers[j].length) {
-                    System.out.print(numbers[j][i] + " ");
-                }
+        for(int i = 0; i <= numbersLineCount - 1; i++) {
+            for(int j = 0; j <= (numbers[i]).length - 1; j++) {
+                if (j > 0)
+                    numbers[i][j] = Math.min(numbers[i][j], numbers[i][j - 1]);
+                System.out.print(numbers[i][j] + " ");
             }
             System.out.println();
         }
-
     }
 }

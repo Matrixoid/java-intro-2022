@@ -29,8 +29,8 @@ public class Reverse {
             }
         }
 
-        for(int i = numbersLineCount - 1; i >= 0; --i) {
-            for(int j = (numbers[i]).length - 1; j >= 0; --j) {
+        for(int i = numbersLineCount - 1; i >= 0; i--) {
+            for(int j = (numbers[i]).length - 1; j >= 0; j--) {
                 System.out.print(numbers[i][j] + " ");
             }
             System.out.println();
