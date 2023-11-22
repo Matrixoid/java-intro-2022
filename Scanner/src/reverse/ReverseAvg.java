@@ -1,7 +1,9 @@
-import java.io.IOException;
-import java.util.Scanner;
+package reverse;
 
-public class Reverse {
+import scanner.MyScanner;
+import java.io.IOException;
+
+public class ReverseAvg {
     public static void main(String[] args) {
         MyScanner sc = new MyScanner(System.in);
         int numbersSize = 1024;
@@ -34,9 +36,24 @@ public class Reverse {
             System.err.println("I/O error: " + e.getMessage());
         }
 
-        for(int i = numbersLineCount - 1; i >= 0; --i) {
-            for(int j = (numbers[i]).length - 1; j >= 0; --j) {
-                System.out.print(numbers[i][j] + " ");
+        for (int i = 0; i < numbersLineCount; i++) {
+            for (int j = 0; j < numbers[i].length; j++) {
+                long t = numbers[i][j];
+                int cnt = 1;
+                for (int k = 0; k < numbers[i].length; k++) {
+                    if (k != j) {
+                        t += numbers[i][k];
+                        cnt++;
+                    }
+                }
+                for (int k = 0; k < numbersLineCount; k++) {
+                    if (j < numbers[k].length && k != i) {
+                        t += numbers[k][j];
+                        cnt++;
+                    }
+                }
+                if (cnt != 0)
+                    System.out.print(t / cnt + " ");
             }
             System.out.println();
         }

@@ -1,11 +1,12 @@
+package wordstat;
+
+import scanner.MyScanner;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class WordStatWords {
+public class WordStatWordsPrefix {
     public static void main(String[] args) {
         String inputFileName = "", outputFileName = "";
         try {
@@ -32,7 +33,7 @@ public class WordStatWords {
                     if (Character.isLetter(sb.charAt(i)) || sb.charAt(i) == '\'' || Character.getType(sb.charAt(i)) == Character.DASH_PUNCTUATION) {
                         word.append(sb.charAt(i));
                     } else {
-                        String s = word.toString().toLowerCase();
+                        String s = word.toString().toLowerCase().substring(0, Math.min(word.length(), 3));
                         if (!word.isEmpty()) {
                             if (!result.containsKey(s)) {
                                 result.put(s, 1);

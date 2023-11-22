@@ -1,29 +1,26 @@
-import java.io.IOException;
-import java.util.Scanner;
+package reverse;
 
-public class ReverseOct {
+import scanner.MyScanner;
+import java.io.IOException;
+
+public class ReverseAbc {
+
     public static void main(String[] args) {
         MyScanner sc = new MyScanner(System.in);
         int numbersSize = 1024;
         int numbersLineCount = 0;
-        long[][] numbers = new long[numbersSize][];
+        String[][] numbers = new String[numbersSize][];
 
         try {
             while (sc.hasNextLine()) {
                 String str = sc.nextLine();
                 MyScanner sc1 = new MyScanner(str);
-                long[] numbersLine = new long[0];
+                String[] numbersLine = new String[0];
 
                 while (sc1.hasNext()) {
-                    String s = sc1.next();
-                    long number = 0;
-                    if (s.matches("[oO][0-9]+"))
-                        number = Long.parseLong(s.substring(1), 8);
-                    else
-                        number = Long.parseLong(s);
-                    long[] numbersLineTmp = new long[numbersLine.length + 1];
+                    String[] numbersLineTmp = new String[numbersLine.length + 1];
                     System.arraycopy(numbersLine, 0, numbersLineTmp, 0, numbersLine.length);
-                    numbersLineTmp[numbersLine.length] = number;
+                    numbersLineTmp[numbersLine.length] = sc1.next();
                     numbersLine = numbersLineTmp;
                 }
 
@@ -31,7 +28,7 @@ public class ReverseOct {
                 numbersLineCount++;
                 if (numbersLineCount >= numbersSize) {
                     numbersSize *= 2;
-                    long[][] numbersTmp = new long[numbersSize][];
+                    String[][] numbersTmp = new String[numbersSize][];
                     System.arraycopy(numbers, 0, numbersTmp, 0, numbersLineCount);
                     numbers = numbersTmp;
                 }
@@ -41,11 +38,11 @@ public class ReverseOct {
         }
 
         for(int i = numbersLineCount - 1; i >= 0; --i) {
-            for(int j = numbers[i].length - 1; j >= 0; --j) {
+            for(int j = (numbers[i]).length - 1; j >= 0; --j) {
                 System.out.print(numbers[i][j] + " ");
             }
-
             System.out.println();
         }
+
     }
 }

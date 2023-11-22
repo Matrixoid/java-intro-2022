@@ -1,9 +1,14 @@
+package wordstat;
+
+import scanner.MyScanner;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
-public class WordStatWordsPrefix {
+public class WordStatCountMiddleL {
     public static void main(String[] args) {
         String inputFileName = "", outputFileName = "";
         try {
@@ -18,11 +23,13 @@ public class WordStatWordsPrefix {
             System.out.println("Отсутствует имя выходного файла");
             return;
         }
-        Map<String, Integer> result = new TreeMap<>();
+        Map<String, Integer> result = new LinkedHashMap<>();
         try {
             MyScanner sc = new MyScanner(new FileInputStream(inputFileName));
             while (sc.hasNextLine()) {
                 String str = sc.nextLine();
+                if (str == null)
+                    break;
                 StringBuilder sb = new StringBuilder(str);
                 sb.append(" ");
                 StringBuilder word = new StringBuilder();
@@ -30,8 +37,9 @@ public class WordStatWordsPrefix {
                     if (Character.isLetter(sb.charAt(i)) || sb.charAt(i) == '\'' || Character.getType(sb.charAt(i)) == Character.DASH_PUNCTUATION) {
                         word.append(sb.charAt(i));
                     } else {
-                        String s = word.toString().toLowerCase().substring(0, Math.min(word.length(), 3));
-                        if (!word.isEmpty()) {
+                        String s = word.toString().toLowerCase();
+                        if (!word.isEmpty() && word.length() >= 5) {
+                            s = s.substring(2, s.length() - 2);
                             if (!result.containsKey(s)) {
                                 result.put(s, 1);
                             } else {
@@ -44,14 +52,16 @@ public class WordStatWordsPrefix {
             }
             sc.close();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFileName), StandardCharsets.UTF_8));
-            for (Map.Entry<String, Integer> p : result.entrySet()) {
+            List<Map.Entry<String, Integer>> entries = new ArrayList<>(result.entrySet());
+            entries.sort(Map.Entry.comparingByValue());
+            for (Map.Entry<String, Integer> p : entries) {
                 writer.write(p.getKey() + " " + p.getValue() + "\n");
             }
             writer.close();
         } catch (FileNotFoundException e) {
             System.out.println("Файл не был найден");
         } catch (IOException e) {
-            System.err.println("I/O error: " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 }

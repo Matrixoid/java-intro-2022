@@ -1,9 +1,11 @@
+package wordstat;
+
+import scanner.MyScanner;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
-public class WordStatWordsShingles {
+public class WordStatInput {
     public static void main(String[] args) {
         String inputFileName = "", outputFileName = "";
         try {
@@ -18,7 +20,7 @@ public class WordStatWordsShingles {
             System.out.println("Отсутствует имя выходного файла");
             return;
         }
-        Map<String, Integer> result = new TreeMap<>();
+        Map<String, Integer> result = new LinkedHashMap<>();
         try {
             MyScanner sc = new MyScanner(new FileInputStream(inputFileName));
             while (sc.hasNextLine()) {
@@ -30,21 +32,13 @@ public class WordStatWordsShingles {
                     if (Character.isLetter(sb.charAt(i)) || sb.charAt(i) == '\'' || Character.getType(sb.charAt(i)) == Character.DASH_PUNCTUATION) {
                         word.append(sb.charAt(i));
                     } else {
-                        int subCnt = 0;
-                        while (word.length() == 2 || subCnt + 3 != word.length() + 1) {
-                            String s = word.toString().toLowerCase();
-                            if (word.length() >= 3)
-                                s = s.substring(subCnt, subCnt + 3);
-                            if (!word.isEmpty()) {
-                                if (!result.containsKey(s)) {
-                                    result.put(s, 1);
-                                } else {
-                                    result.put(s, result.get(s) + 1);
-                                }
+                        String s = word.toString().toLowerCase();
+                        if (!word.isEmpty()) {
+                            if (!result.containsKey(s)) {
+                                result.put(s, 1);
+                            } else {
+                                result.put(s, result.get(s) + 1);
                             }
-                            if (word.length() < 3)
-                                break;
-                            subCnt++;
                         }
                         word = new StringBuilder();
                     }

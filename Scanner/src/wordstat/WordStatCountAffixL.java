@@ -1,10 +1,14 @@
+package wordstat;
+
+import scanner.MyScanner;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
-public class WordStatWordsSuffix {
+public class WordStatCountAffixL {
     public static void main(String[] args) {
         String inputFileName = "", outputFileName = "";
         try {
@@ -19,7 +23,7 @@ public class WordStatWordsSuffix {
             System.out.println("Отсутствует имя выходного файла");
             return;
         }
-        Map<String, Integer> result = new TreeMap<>();
+        Map<String, Integer> result = new LinkedHashMap<>();
         try {
             MyScanner sc = new MyScanner(new FileInputStream(inputFileName));
             while (sc.hasNextLine()) {
@@ -33,12 +37,19 @@ public class WordStatWordsSuffix {
                     if (Character.isLetter(sb.charAt(i)) || sb.charAt(i) == '\'' || Character.getType(sb.charAt(i)) == Character.DASH_PUNCTUATION) {
                         word.append(sb.charAt(i));
                     } else {
-                        String s = word.toString().toLowerCase().substring(word.length() >= 3 ? word.length() - 3 : 0);
-                        if (!word.isEmpty()) {
-                            if (!result.containsKey(s)) {
-                                result.put(s, 1);
+                        String s = word.toString().toLowerCase();
+                        if (!word.isEmpty() && word.length() >= 2) {
+                            String sPrefix = s.substring(0, 2);
+                            String sSuffix = s.substring(s.length() - 2);
+                            if (!result.containsKey(sPrefix)) {
+                                result.put(sPrefix, 1);
                             } else {
-                                result.put(s, result.get(s) + 1);
+                                result.put(sPrefix, result.get(sPrefix) + 1);
+                            }
+                            if (!result.containsKey(sSuffix)) {
+                                result.put(sSuffix, 1);
+                            } else {
+                                result.put(sSuffix, result.get(sSuffix) + 1);
                             }
                         }
                         word = new StringBuilder();
@@ -47,14 +58,16 @@ public class WordStatWordsSuffix {
             }
             sc.close();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFileName), StandardCharsets.UTF_8));
-            for (Map.Entry<String, Integer> p : result.entrySet()) {
+            List<Map.Entry<String, Integer>> entries = new ArrayList<>(result.entrySet());
+            entries.sort(Map.Entry.comparingByValue());
+            for (Map.Entry<String, Integer> p : entries) {
                 writer.write(p.getKey() + " " + p.getValue() + "\n");
             }
             writer.close();
         } catch (FileNotFoundException e) {
             System.out.println("Файл не был найден");
         } catch (IOException e) {
-            System.err.println("I/O error: " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 }

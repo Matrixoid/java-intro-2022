@@ -1,7 +1,27 @@
-import java.io.IOException;
-import java.util.Scanner;
+package reverse;
 
-public class ReverseAbc {
+import scanner.MyScanner;
+import java.io.IOException;
+
+public class ReverseMinRAbc {
+    public static boolean compare(String s1, String s2) {
+        char sign1 = '+';
+        char sign2 = '+';
+        if (s1.charAt(0) == '-')
+            sign1 = '-';
+        if (s2.charAt(0) == '-')
+            sign2 = '-';
+
+        if (sign1 == '+' && sign2 == '+') {
+            return s1.length() < s2.length() || (s1.length() == s2.length() && s1.compareTo(s2) <= 0);
+        } else if (sign1 == '+') {
+            return false;
+        } else if (sign2 == '+') {
+            return true;
+        } else {
+            return s1.length() > s2.length() || (s1.length() == s2.length() && s1.compareTo(s2) >= 0);
+        }
+    }
 
     public static void main(String[] args) {
         MyScanner sc = new MyScanner(System.in);
@@ -35,12 +55,15 @@ public class ReverseAbc {
             System.err.println("I/O error: " + e.getMessage());
         }
 
-        for(int i = numbersLineCount - 1; i >= 0; --i) {
-            for(int j = (numbers[i]).length - 1; j >= 0; --j) {
+        for(int i = 0; i <= numbersLineCount - 1; i++) {
+            for(int j = 0; j <= (numbers[i]).length - 1; j++) {
+                if (j > 0)
+                    if (!compare(numbers[i][j], numbers[i][j - 1]))
+                        numbers[i][j] = numbers[i][j - 1];
+
                 System.out.print(numbers[i][j] + " ");
             }
             System.out.println();
         }
-
     }
 }
